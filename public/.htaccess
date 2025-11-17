@@ -1,0 +1,12 @@
+﻿Options +FollowSymLinks
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /factapex/public/
+
+# Si el archivo o directorio existe, úsalo directamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirige todo lo demás a index.php
+RewriteRule ^(.*)$ index.php [L,QSA]

@@ -1,0 +1,2 @@
+<?php
+// Variables de entorno
