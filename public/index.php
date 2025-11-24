@@ -61,6 +61,10 @@ $router->addRoute('/logout', 'AuthController', 'logout', [
     AuthMiddleware::class
 ]);
 
+$router->addRoute('/facturas', 'FacturasController', 'index', [
+    AuthMiddleware::class
+]);
+
 // Obtener URI y limpiar
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 

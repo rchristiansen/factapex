@@ -26,11 +26,7 @@ class Controller {
             require $viewFile;
         } else {
             // Renderizar con layout (main.php con sidebar)
-            $content = '';
-            ob_start();
-            require $viewFile;
-            $content = ob_get_clean();
-            
+            // AQUÍ ESTÁ EL FIX: definir $viewFile antes de incluir el layout
             require __DIR__ . '/../../views/layouts/main.php';
         }
     }

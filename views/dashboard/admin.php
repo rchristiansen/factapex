@@ -4,8 +4,97 @@
         <p class="text-gray-400 mt-2">Panel de control general del sistema</p>
     </div>
 
-    <!-- Cards de estadísticas ADMIN -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <!-- Skeleton de carga inicial -->
+    <div id="dashboardLoader">
+        <!-- Skeleton Cards de estadísticas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="h-4 bg-gray-700 rounded w-24 mb-3 animate-pulse"></div>
+                        <div class="h-8 bg-gray-700 rounded w-16 animate-pulse"></div>
+                    </div>
+                    <div class="bg-gray-700 p-3 rounded-lg w-12 h-12 animate-pulse"></div>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="h-4 bg-gray-700 rounded w-28 mb-3 animate-pulse"></div>
+                        <div class="h-8 bg-gray-700 rounded w-16 animate-pulse"></div>
+                    </div>
+                    <div class="bg-gray-700 p-3 rounded-lg w-12 h-12 animate-pulse"></div>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="h-4 bg-gray-700 rounded w-32 mb-3 animate-pulse"></div>
+                        <div class="h-8 bg-gray-700 rounded w-16 animate-pulse"></div>
+                    </div>
+                    <div class="bg-gray-700 p-3 rounded-lg w-12 h-12 animate-pulse"></div>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="h-4 bg-gray-700 rounded w-24 mb-3 animate-pulse"></div>
+                        <div class="h-8 bg-gray-700 rounded w-20 animate-pulse"></div>
+                    </div>
+                    <div class="bg-gray-700 p-3 rounded-lg w-12 h-12 animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skeleton Cards grandes -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="h-6 bg-gray-700 rounded w-48 mb-4 animate-pulse"></div>
+                <div class="space-y-3">
+                    <div class="h-4 bg-gray-700 rounded w-full animate-pulse"></div>
+                    <div class="h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
+                    <div class="h-4 bg-gray-700 rounded w-5/6 animate-pulse"></div>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="h-6 bg-gray-700 rounded w-40 mb-4 animate-pulse"></div>
+                <div class="space-y-3">
+                    <div class="h-4 bg-gray-700 rounded w-full animate-pulse"></div>
+                    <div class="h-4 bg-gray-700 rounded w-2/3 animate-pulse"></div>
+                    <div class="h-4 bg-gray-700 rounded w-4/5 animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skeleton Acciones rápidas -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="bg-gray-700 w-12 h-12 rounded-lg mb-4 animate-pulse"></div>
+                <div class="h-5 bg-gray-700 rounded w-24 mb-2 animate-pulse"></div>
+                <div class="h-4 bg-gray-700 rounded w-32 animate-pulse"></div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="bg-gray-700 w-12 h-12 rounded-lg mb-4 animate-pulse"></div>
+                <div class="h-5 bg-gray-700 rounded w-28 mb-2 animate-pulse"></div>
+                <div class="h-4 bg-gray-700 rounded w-36 animate-pulse"></div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="bg-gray-700 w-12 h-12 rounded-lg mb-4 animate-pulse"></div>
+                <div class="h-5 bg-gray-700 rounded w-20 mb-2 animate-pulse"></div>
+                <div class="h-4 bg-gray-700 rounded w-28 animate-pulse"></div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="bg-gray-700 w-12 h-12 rounded-lg mb-4 animate-pulse"></div>
+                <div class="h-5 bg-gray-700 rounded w-24 mb-2 animate-pulse"></div>
+                <div class="h-4 bg-gray-700 rounded w-32 animate-pulse"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido del dashboard (oculto inicialmente) -->
+    <div id="dashboardContent" class="hidden">
+        <!-- Cards de estadísticas ADMIN -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
             <div class="flex items-center justify-between">
                 <div>
@@ -143,4 +232,19 @@
             <p class="text-gray-400 text-sm">Ajustes del sistema</p>
         </button>
     </div>
+    </div>
 </div>
+
+<script>
+// Simular carga de dashboard con delay
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('dashboardLoader');
+    const content = document.getElementById('dashboardContent');
+    
+    // Simular carga de datos (puedes reemplazar con llamadas AJAX reales)
+    setTimeout(() => {
+        if (loader) loader.classList.add('hidden');
+        if (content) content.classList.remove('hidden');
+    }, 800); // 800ms de delay para simular carga
+});
+</script>
