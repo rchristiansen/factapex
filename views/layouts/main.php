@@ -53,12 +53,42 @@ require_once __DIR__ . '/../../config/app.php';
                     <span>Facturas</span>
                 </button>
                 
+                <?php if (($_SESSION['user_role'] ?? '') === 'admin'): ?>
+                <!-- Opciones solo para Admin -->
+                <button onclick="navigate('<?= PUBLIC_PATH ?>/ejecutivos')" class="nav-link w-full text-left px-4 py-3 rounded-lg hover:bg-gray-700 transition text-gray-300 flex items-center space-x-3">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                    </svg>
+                    <span>Ejecutivos</span>
+                </button>
+                <?php endif; ?>
+                
+                <?php if (in_array(($_SESSION['user_role'] ?? ''), ['admin', 'ejecutivo'])): ?>
+                <!-- Opciones para Admin y Ejecutivo -->
+                <button onclick="navigate('<?= PUBLIC_PATH ?>/clientes')" class="nav-link w-full text-left px-4 py-3 rounded-lg hover:bg-gray-700 transition text-gray-300 flex items-center space-x-3">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                    </svg>
+                    <span>Clientes</span>
+                </button>
+                
+                <button onclick="navigate('<?= PUBLIC_PATH ?>/reportes')" class="nav-link w-full text-left px-4 py-3 rounded-lg hover:bg-gray-700 transition text-gray-300 flex items-center space-x-3">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path>
+                    </svg>
+                    <span>Reportes</span>
+                </button>
+                <?php endif; ?>
+                
+                <?php if (($_SESSION['user_role'] ?? '') === 'cliente'): ?>
+                <!-- Opciones solo para Cliente -->
                 <button onclick="navigate('<?= PUBLIC_PATH ?>/riesgo')" class="nav-link w-full text-left px-4 py-3 rounded-lg hover:bg-gray-700 transition text-gray-300 flex items-center space-x-3">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                     </svg>
                     <span>Cuestionario de Riesgo</span>
                 </button>
+                <?php endif; ?>
                 
                 <button onclick="navigate('<?= PUBLIC_PATH ?>/documentos')" class="nav-link w-full text-left px-4 py-3 rounded-lg hover:bg-gray-700 transition text-gray-300 flex items-center space-x-3">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -77,9 +107,15 @@ require_once __DIR__ . '/../../config/app.php';
             
             <div class="absolute bottom-0 w-full p-4 border-t border-gray-700 bg-gray-800">
                 <div class="flex items-center space-x-3 mb-4">
-                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">
-                        <?= strtoupper(substr($_SESSION['user_name'] ?? 'U', 0, 2)) ?>
-                    </div>
+                    <?php if (!empty($_SESSION['user_avatar'])): ?>
+                        <img src="<?= htmlspecialchars($_SESSION['user_avatar']) ?>" 
+                             alt="Avatar" 
+                             class="w-10 h-10 rounded-full border-2 border-orange-500">
+                    <?php else: ?>
+                        <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">
+                            <?= strtoupper(substr($_SESSION['user_name'] ?? 'U', 0, 2)) ?>
+                        </div>
+                    <?php endif; ?>
                     <div>
                         <p class="text-sm font-medium text-white"><?= htmlspecialchars($_SESSION['user_name'] ?? 'Usuario') ?></p>
                         <p class="text-xs text-gray-400"><?= ucfirst($_SESSION['user_role'] ?? 'cliente') ?></p>

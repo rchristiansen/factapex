@@ -43,6 +43,20 @@ class AuthController extends Controller {
             $user = $userModel->findByEmail($email);
 
             if ($user && password_verify($password, $user['password'])) {
+                
+                // NOTA: Permitir login con email/password incluso si el usuario se registró con Google
+                // porque en el flujo de OAuth también pedimos que establezca una contraseña
+                
+                // Verificar estado del usuario
+                if (isset($user['estado']) && $user['estado'] === 'bloqueado') {
+                    http_response_code(403);
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Tu cuenta está bloqueada. Contacta al administrador.'
+                    ]);
+                    return;
+                }
+                
                 // Crear sesión segura
                 session_regenerate_id(true);
                 
@@ -50,6 +64,8 @@ class AuthController extends Controller {
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_role'] = $user['role'] ?? 'cliente';
+                $_SESSION['user_provider'] = $user['provider'] ?? 'local';
+                $_SESSION['user_avatar'] = $user['avatar'] ?? null; // Agregar avatar a la sesión
                 $_SESSION['token'] = bin2hex(random_bytes(32));
                 $_SESSION['last_activity'] = time();
 
@@ -86,6 +102,18 @@ class AuthController extends Controller {
         session_destroy();
         header('Location: ' . PUBLIC_PATH . '/login');
         exit;
+    }
+    
+    public function completeProfile() {
+        // Verificar que hay datos de Google en sesión
+        if (!isset($_SESSION['google_user_data'])) {
+            header('Location: ' . PUBLIC_PATH . '/login');
+            exit;
+        }
+        
+        $this->render('auth/complete_profile', [
+            'title' => 'Completar Perfil - Factapex'
+        ]);
     }
 
     public function register() {

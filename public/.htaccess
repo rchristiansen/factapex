@@ -4,6 +4,10 @@ Options -Indexes
 RewriteEngine On
 RewriteBase /factapex/public/
 
+# Permitir acceso directo a archivos OAuth de Google
+RewriteCond %{REQUEST_URI} ^/factapex/public/auth/google/(login|callback|complete-profile|show-complete-profile)\.php$
+RewriteRule ^ - [L]
+
 # Si el archivo o directorio existe, úsalo directamente
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

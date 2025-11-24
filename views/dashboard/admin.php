@@ -1,7 +1,22 @@
 <div class="max-w-7xl mx-auto">
-    <div class="mb-6">
-        <h1 class="text-3xl font-bold text-white">Dashboard Administrador</h1>
-        <p class="text-gray-400 mt-2">Panel de control general del sistema</p>
+    <div class="mb-6 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <?php if (!empty($user['avatar'])): ?>
+                <img src="<?= htmlspecialchars($user['avatar']) ?>" 
+                     alt="Avatar" 
+                     class="w-16 h-16 rounded-full border-4 border-orange-500 shadow-lg">
+            <?php else: ?>
+                <div class="w-16 h-16 rounded-full border-4 border-orange-500 bg-gray-700 flex items-center justify-center">
+                    <span class="text-2xl font-bold text-white">
+                        <?= strtoupper(substr($user['name'], 0, 1)) ?>
+                    </span>
+                </div>
+            <?php endif; ?>
+            <div>
+                <h1 class="text-3xl font-bold text-white">Dashboard Administrador</h1>
+                <p class="text-gray-400 mt-1">Panel de control general del sistema</p>
+            </div>
+        </div>
     </div>
 
     <!-- Skeleton de carga inicial -->

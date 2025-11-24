@@ -13,17 +13,32 @@ class DashboardController extends Controller {
         $role = $_SESSION['user_role'] ?? 'cliente';
 
         // Determinar qué vista mostrar según el rol
-        $view = ($role === 'admin') ? 'dashboard/admin' : 'dashboard/cliente';
-
-        // Obtener estadísticas según el rol
-        $stats = ($role === 'admin') ? $this->getAdminStats() : $this->getClienteStats();
+        switch ($role) {
+            case 'admin':
+                $view = 'dashboard/admin';
+                $stats = $this->getAdminStats();
+                $title = 'Dashboard Admin';
+                break;
+            case 'ejecutivo':
+                $view = 'dashboard/ejecutivo';
+                $stats = $this->getEjecutivoStats();
+                $title = 'Dashboard Ejecutivo';
+                break;
+            case 'cliente':
+            default:
+                $view = 'dashboard/cliente';
+                $stats = $this->getClienteStats();
+                $title = 'Dashboard Cliente';
+                break;
+        }
 
         $this->render($view, [
-            'title' => ($role === 'admin' ? 'Dashboard Admin' : 'Dashboard Cliente') . ' - Factapex',
+            'title' => $title . ' - Factapex',
             'user' => [
                 'name' => $_SESSION['user_name'] ?? 'Usuario',
                 'email' => $_SESSION['user_email'] ?? '',
-                'role' => $role
+                'role' => $role,
+                'avatar' => $_SESSION['user_avatar'] ?? null
             ],
             'stats' => $stats
         ]);
@@ -52,6 +67,21 @@ class DashboardController extends Controller {
             'facturas_totales' => 234,
             'pendientes_aprobacion' => 18,
             'volumen_total' => 1200000
+        ];
+    }
+
+    /**
+     * Obtener estadísticas del ejecutivo
+     */
+    private function getEjecutivoStats() {
+        // TODO: Obtener datos reales de la base de datos filtrados por ejecutivo
+        $ejecutivoId = $_SESSION['user_id'] ?? 0;
+        
+        return [
+            'clientes_asignados' => 12,
+            'facturas_gestionadas' => 45,
+            'en_proceso' => 8,
+            'volumen_gestionado' => 450000
         ];
     }
 
@@ -88,6 +118,24 @@ class DashboardController extends Controller {
         echo json_encode([
             'success' => true,
             'data' => $this->getAdminStats()
+        ]);
+    }
+
+    /**
+     * API: Obtener datos del dashboard del ejecutivo
+     */
+    public function getEjecutivoData() {
+        header('Content-Type: application/json');
+        
+        if ($_SESSION['user_role'] !== 'ejecutivo') {
+            http_response_code(403);
+            echo json_encode(['error' => 'No autorizado']);
+            return;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'data' => $this->getEjecutivoStats()
         ]);
     }
 }

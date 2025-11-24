@@ -1,0 +1,20 @@
+{
+  "name": "factapex",
+  "description": "Sistema de factoring con autenticación multi-rol y Google OAuth",
+  "version": "1.0.0",
+  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "google/apiclient": "^2.15"
+  },
+  "autoload": {
+    "psr-4": {
+      "Factapex\\": "src/"
+    }
+  },
+  "config": {
+    "platform": {
+      "php": "8.2.12"
+    }
+  }
+}
