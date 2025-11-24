@@ -34,8 +34,6 @@ use Factapex\Services\GoogleOAuthService;
 
 try {
     // Verificar que Google OAuth está configurado
-    require_once __DIR__ . '/../../../config/google_oauth.php';
-    
     if (!isGoogleOAuthConfigured()) {
         die('Google OAuth no está configurado. Por favor contacta al administrador.');
     }

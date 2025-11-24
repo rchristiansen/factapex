@@ -20,11 +20,15 @@ require_once __DIR__ . '/env.php';
 // Configuración de Google OAuth
 // IMPORTANTE: Por seguridad, las credenciales deben estar en variables de entorno
 // o en un archivo .env que NO se suba a GitHub
-define('GOOGLE_CLIENT_ID', getenv('GOOGLE_CLIENT_ID') ?: '');
-define('GOOGLE_CLIENT_SECRET', getenv('GOOGLE_CLIENT_SECRET') ?: '');
+$googleClientId = getenv('GOOGLE_CLIENT_ID');
+$googleClientSecret = getenv('GOOGLE_CLIENT_SECRET');
+$googleRedirectUri = getenv('GOOGLE_REDIRECT_URI');
+
+define('GOOGLE_CLIENT_ID', $googleClientId ?: '');
+define('GOOGLE_CLIENT_SECRET', $googleClientSecret ?: '');
 
 // URI de redirección
-define('GOOGLE_REDIRECT_URI', getenv('GOOGLE_REDIRECT_URI') ?: 'http://localhost/factapex/public/auth/google/callback.php');
+define('GOOGLE_REDIRECT_URI', $googleRedirectUri ?: 'http://localhost/factapex/public/auth/google/callback.php');
 
 // Scopes necesarios
 define('GOOGLE_SCOPES', [
